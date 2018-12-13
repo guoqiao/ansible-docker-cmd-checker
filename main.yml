@@ -1,0 +1,17 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: run cmd in containers
+  hosts: docker
+  gather_facts: no
+  strategy: free  # free|linear
+  serial: 10
+  vars:
+    package: vim  # placeholder package
+  tasks:
+    - name: start containers
+      docker_container:
+        name: "{{inventory_hostname}}"
+        image: "{{docker_image}}"
+        command: /bin/bash -c "{{pkgmgr}} -y -q update && {{pkgmgr}} -y -q install {{package}}"
+        detach: no
+        privileged: yes
