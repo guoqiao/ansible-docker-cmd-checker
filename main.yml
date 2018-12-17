@@ -7,11 +7,15 @@
   serial: 10
   vars:
     package: vim  # placeholder package
+    cmd:  "{{pkgmgr}} -y -q update && {{pkgmgr}} -y -q install {{package}}"
   tasks:
+
+    - debug: var=cmd
+
     - name: start containers
       docker_container:
         name: "{{inventory_hostname}}"
         image: "{{docker_image}}"
-        command: /bin/bash -c "{{pkgmgr}} -y -q update && {{pkgmgr}} -y -q install {{package}}"
+        command: /bin/bash -c "{{cmd}}"
         detach: no
         privileged: yes
