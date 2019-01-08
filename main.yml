@@ -7,7 +7,7 @@
   serial: 10
   vars:
     package: vim  # placeholder package
-    cmd:  "{{pkgmgr}} -y -q update && {{pkgmgr}} -y -q install {{package}}"
+    cmd:  "{{pkg_update_cmd}} && {{pkg_check_cmd}} {{package}}"
   tasks:
 
     - debug: var=cmd
