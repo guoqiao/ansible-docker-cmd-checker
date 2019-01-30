@@ -3,7 +3,7 @@
 - name: run cmd in containers
   hosts: docker
   gather_facts: no
-  strategy: free  # free|linear
+  strategy: linear  # free|linear
   serial: 10
   vars:
     package: vim  # placeholder package
@@ -18,4 +18,7 @@
         image: "{{docker_image}}"
         command: /bin/bash -c "{{cmd}}"
         detach: no
+        auto_remove: no  # do not enable it
+        cleanup: yes
         privileged: yes
+        debug: yes
